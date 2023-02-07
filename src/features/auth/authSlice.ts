@@ -1,44 +1,40 @@
-import { RootState } from './../../app/store';
 import { AuthState, LoginPayload, User } from './types';
-import { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: AuthState = {
-  isLoggedIn: false,
-  logging: false,
-  currentUser: undefined,
+  loading: false,
+  userInfo: {},
+  token: '',
+  error: '',
+  success: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<LoginPayload>) => {
-      state.logging = true;
+    login: (state, action: LoginPayload) => {
+      state.loading = true;
     },
     loginSuccess: (state, action: PayloadAction<User>) => {
-      state.isLoggedIn = true;
-      state.logging = false;
-      state.currentUser = action.payload;
+      state.loading = false;
+      state.userInfo = action.payload;
+      state.token = action.payload.token ? action.payload.token : '';
     },
-    loginFailed: (state, action: PayloadAction<string>) => {
-      state.logging = false;
+    loginFailed: (state, action: PayloadAction<any>) => {
+      state.loading = false;
       console.log(action.payload);
     },
 
     logout: (state) => {
-      state.isLoggedIn = false;
-      state.currentUser = undefined;
+      state.token = '';
+      state.userInfo = {};
     },
   },
 });
 
 // Actions
 export const authActions = authSlice.actions;
-
-// Selectors
-export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
-export const selectIsLogging = (state: RootState) => state.auth.logging;
 
 // Reducer
 const authReducer = authSlice.reducer;

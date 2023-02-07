@@ -4,7 +4,7 @@ import { Card, Link, Container, Typography } from '@mui/material';
 import useResponsive from '../hooks/useResponsive';
 import { Page } from '../components/page';
 import Logo from '../components/Logo';
-import { LoginForm } from '../features/auth';
+import { RegisterForm } from '../features/auth';
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -49,22 +49,21 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Register() {
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
 
   return (
-    <Page title="Login">
+    <Page title="Register">
       <RootStyle>
         <HeaderStyle>
           <Logo />
-
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account? {''}
-              <Link variant="subtitle2" component={RouterLink} to="/register">
-                Get started
+              Already have an account? {''}
+              <Link variant="subtitle2" component={RouterLink} to="/login">
+                Login
               </Link>
             </Typography>
           )}
@@ -73,29 +72,39 @@ export default function Login() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
+              Manage the job more effectively with Minimal
             </Typography>
-            <img src="/static/illustrations/illustration_login.png" alt="login" />
+            <img alt="register" src="/static/illustrations/illustration_register.png" />
           </SectionStyle>
         )}
 
-        <Container maxWidth="sm">
+        <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Get started absolutely free.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
 
-            {/* <AuthSocial /> */}
+            <RegisterForm />
 
-            <LoginForm />
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+              By registering, I agree to Minimal&nbsp;
+              <Link underline="always" color="text.primary" href="#">
+                Terms of Service
+              </Link>
+              {''}and{''}
+              <Link underline="always" color="text.primary" href="#">
+                Privacy Policy
+              </Link>
+              .
+            </Typography>
 
             {!smUp && (
-              <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
-                <Link variant="subtitle2" component={RouterLink} to="/register">
-                  Get started
+              <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
+                Already have an account?{' '}
+                <Link variant="subtitle2" to="/login" component={RouterLink}>
+                  Login
                 </Link>
               </Typography>
             )}
