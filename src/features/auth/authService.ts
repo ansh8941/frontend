@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { httpClient } from '../../utils/httpClient';
+import { LoginPayload } from './types';
 
 // const register = ({ name, email, password }) => {
 //   return axios.post(process.env.REACT_APP_API_URL + '/api/register', {
@@ -7,16 +8,14 @@ import axios from 'axios';
 //     password,
 //   });
 // };
-// const login = ({ email, password }) => {
-//   return axios.post(
-//     process.env.REACT_APP_API_URL + '/api/login',
-//     { email, password },
-//     {
-//       withCredentials: true,
-//       credentials: 'include',
-//     }
-//   );
-// };
+
+const login = ({ payload: { username, password } }: LoginPayload) => {
+  return httpClient({
+    url: `auth/login`,
+    method: 'POST',
+    data: { username, password },
+  });
+};
 // const logout = () => {
 //   return axios.post(process.env.REACT_APP_API_URL + '/api/logout', null, {
 //     withCredentials: true,
@@ -31,10 +30,9 @@ import axios from 'axios';
 //   });
 // };
 
-const authService = {
+export {
   // register,
-  // login,
+  login,
   // logout,
   // refreshtoken,
 };
-export default authService;

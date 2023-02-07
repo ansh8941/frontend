@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Link, Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -62,5 +62,9 @@ export default function Logo({ disabledLink, sx }: LogoTypes) {
     return <>{logo}</>;
   }
 
-  return <RouterLink to="/">{logo}</RouterLink>;
+  return (
+    <Link component={RouterLink} to="/">
+      {logo}
+    </Link>
+  );
 }

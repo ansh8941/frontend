@@ -1,16 +1,26 @@
 export interface LoginPayload {
-  username: string;
-  password: string;
+  payload: {
+    username: string;
+    password: string;
+  };
   type: string;
 }
 
-export interface AuthState {
-  isLoggedIn: boolean;
-  logging?: boolean;
-  currentUser?: User;
+export interface User {
+  id?: string;
+  username?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  image?: string;
+  token?: string;
 }
 
-export interface User {
-  id: number | string;
-  name: string;
+export interface AuthState {
+  loading: boolean;
+  userInfo: User;
+  token: string;
+  error: string;
+  success: boolean;
 }

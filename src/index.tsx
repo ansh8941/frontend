@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import { CircularProgress, CssBaseline } from '@mui/material';
+import { LinearProgress, Container, CssBaseline } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -14,9 +15,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const ContainerStyle = styled(Container)(() => ({
+  right: '0px',
+  left: '0px',
+  bottom: '0px',
+  zIndex: 9998,
+  position: 'fixed',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: 'rgb(255, 255, 255)',
+  height: 'calc(100% - 92px)',
+}));
 root.render(
   <React.StrictMode>
-    <Suspense fallback={<CircularProgress size="20" color="secondary" />}>
+    <Suspense
+      fallback={
+        <ContainerStyle maxWidth="sm">
+          <LinearProgress color="inherit" sx={{ width: '100%' }} />
+        </ContainerStyle>
+      }
+    >
       <Provider store={store}>
         <HelmetProvider>
           <BrowserRouter>

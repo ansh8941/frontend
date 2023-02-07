@@ -1,9 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
-// material
-import { Grid, Button, Container, Stack, Typography } from '@mui/material';
+import { Grid, Container, Stack } from '@mui/material';
 // components
 import { Page } from '../components/page';
-import Iconify from '../components/Iconify';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../features/blog/components';
 // mock
 import POSTS from '../_mock/blog';
@@ -20,17 +17,8 @@ const SORT_OPTIONS = [
 
 export default function Home() {
   return (
-    <Page title="Dashboard: Blog">
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Blog
-          </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Post
-          </Button>
-        </Stack>
-
+    <Page sx={{ paddingTop: '95px' }} title="Home">
+      <Container maxWidth="xl">
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch posts={POSTS} />
           <BlogPostsSort options={SORT_OPTIONS} />
