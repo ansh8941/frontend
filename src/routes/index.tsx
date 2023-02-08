@@ -1,17 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-// layouts
-// import DashboardLayout from '../layouts/dashboard';
 
-import { GuestLayout, AuthLayout } from '../layouts';
+import { GuestLayout } from '../layouts';
 import { Login, Register, Page404, Home } from '../pages';
 
 const Router = () => {
   return (
     <Routes>
-      <Route element={<GuestLayout />}>
+      <Route element={<GuestLayout isHeader={true} />}>
         <Route path="/" element={<Home />} />
       </Route>
-      <Route element={<AuthLayout />}>
+      <Route element={<GuestLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>

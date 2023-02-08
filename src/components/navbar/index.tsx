@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { alpha, styled } from '@mui/material/styles';
 import { AppBar, Container, Link, Toolbar, ListItemButton, Button, Box } from '@mui/material';
 import Logo from '../Logo';
-
+import AccountPopover from './AccountPopover';
 // ----------------------------------------------------------------------
 
 const APPBAR_MOBILE = 64;
@@ -99,6 +99,7 @@ export default function NavBar() {
           <Button variant="contained" component={RouterLink} to="/login">
             Login
           </Button>
+          <AccountPopover />
         </ContainerStyle>
       </ToolbarStyle>
     </HeaderStyle>

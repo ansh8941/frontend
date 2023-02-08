@@ -1,10 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import NavBar from '../components/navbar';
 
-export default function GuestLayout() {
+export interface GuestLayoutTypes {
+  isHeader?: boolean;
+}
+
+export default function GuestLayout({ isHeader }: GuestLayoutTypes) {
   return (
     <>
-      <NavBar />
+      {isHeader && <NavBar />}
       <Outlet />
     </>
   );
