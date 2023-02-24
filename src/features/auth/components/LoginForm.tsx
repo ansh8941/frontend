@@ -5,37 +5,44 @@ import { useFormik } from 'formik';
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/Iconify';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { authActions } from '../authSlice';
+import { useLoginMutation } from '../authService';
+import { toast } from 'react-toastify';
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const { loading, token } = useAppSelector((state) => state.auth);
+  const [login, { isSuccess, isError, isLoading, error }] = useLoginMutation();
 
   useEffect(() => {
-    if (token) {
-      navigate('/profile', { replace: true });
+    if (isSuccess) {
+      toast.success('User loggedin successfully');
+      navigate('/');
     }
-  }, [token]);
+
+    if (isError) {
+      console.log(error);
+      toast.error('Unauthorized', {
+        position: 'top-right',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   const LoginSchema = Yup.object().shape({
-    //email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    username: Yup.string().required('Username is required'),
+    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      email: '',
       password: '',
       remember: false,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      const { username, password } = values;
-      dispatch(authActions.login({ username, password }));
+    onSubmit: async () => {
+      const { email, password } = values;
+      await login({ email, password });
     },
   });
 
@@ -50,12 +57,12 @@ export default function LoginForm() {
       <Stack spacing={3}>
         <TextField
           fullWidth
-          autoComplete="username"
+          autoComplete="email"
           type="text"
-          label="Username"
-          {...getFieldProps('username')}
-          error={Boolean(touched.username && errors.username)}
-          helperText={touched.username && errors.username}
+          label="Email"
+          {...getFieldProps('email')}
+          error={Boolean(touched.email && errors.email)}
+          helperText={touched.email && errors.email}
         />
 
         <TextField
@@ -89,7 +96,7 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={loading || isSubmitting}>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading || isSubmitting}>
         Login
       </LoadingButton>
     </form>
